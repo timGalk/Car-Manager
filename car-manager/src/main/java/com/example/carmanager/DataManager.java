@@ -1,2 +1,4 @@
-package com.example.carmanager;public class DataManager {
+package com.example.carmanager;
+
+public class DataManager {
 }
