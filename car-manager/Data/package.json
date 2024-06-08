@@ -1,0 +1,14 @@
+{
+  "name": "$name$",
+  "version": "$version$",
+  "description": "$END$",
+  "main": "$main$",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/__aightman/car-manager-2.0.git"
+  },
+  "private": true
+}
