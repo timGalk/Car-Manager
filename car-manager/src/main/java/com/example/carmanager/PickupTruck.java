@@ -4,8 +4,8 @@ public class PickupTruck extends Vehicle {
 
     private double payloadCapacity;
 
-    public PickupTruck(String model, int year, String color, int passengers, double payloadCapacity) {
-        super(model, year, color, passengers);
+    public PickupTruck(String model, int year, String color, int passengers, double payloadCapacity, boolean bookingStatus) {
+        super(model, year, color, passengers,bookingStatus);
         this.payloadCapacity = payloadCapacity;
     }
 
