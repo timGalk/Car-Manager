@@ -1,5 +1,7 @@
 package com.example.carmanager;
 
+import java.time.LocalDate;
+
 public class Vehicle {
     //
     private boolean status;
