@@ -5,8 +5,8 @@ public class BEVCar extends Vehicle {
     private double batteryCapacity;
     private double range;
 
-    public BEVCar(String model, int year, String color, int passengers, double batteryCapacity, double range) {
-        super(model, year, color, passengers);
+    public BEVCar(String model, int year, String color, int passengers, double batteryCapacity, double range, boolean status) {
+        super(model, year, color, passengers,status);
         this.batteryCapacity = batteryCapacity;
         this.range = range;
     }

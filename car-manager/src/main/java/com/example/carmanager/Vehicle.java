@@ -3,18 +3,20 @@ package com.example.carmanager;
 import java.time.LocalDate;
 
 public class Vehicle {
+    //
+    private boolean status;
     private String model;
     private int year;
     private String color;
     private int passengers;
-    private LocalDate rentedFrom;
-    private LocalDate rentedTo;
+    // added boolean property bookingStatus in order to define booking status  of vehicle
 
-    public Vehicle(String model, int year, String color, int passengers) {
+    public Vehicle(String model, int year, String color, int passengers, boolean status) {
         this.model = model;
         this.year = year;
         this.color = color;
         this.passengers = passengers;
+        this.status = status;
     }
 
     public String getModel() {
@@ -27,6 +29,10 @@ public class Vehicle {
 
     public int getYear() {
         return year;
+    }
+
+    public boolean getBookingStatus(){
+        return status;
     }
 
     public void setYear(int year) {
@@ -48,25 +54,11 @@ public class Vehicle {
     public void setPassengers(int passengers) {
         this.passengers = passengers;
     }
-
-    public LocalDate getRentedFrom() {
-        return rentedFrom;
+    public void  setBookingStatus(boolean status){
+        this.status = status;
     }
 
-    public void setRentedFrom(LocalDate rentedFrom) {
-        this.rentedFrom = rentedFrom;
-    }
 
-    public LocalDate getRentedTo() {
-        return rentedTo;
-    }
 
-    public void setRentedTo(LocalDate rentedTo) {
-        this.rentedTo = rentedTo;
-    }
 
-    @Override
-    public String toString(){
-        return model;
-    }
 }

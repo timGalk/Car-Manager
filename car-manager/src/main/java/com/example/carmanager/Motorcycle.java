@@ -3,8 +3,8 @@ package com.example.carmanager;
 public class Motorcycle extends Vehicle {
     private String type;
 
-    public Motorcycle(String model, int year, int passengers, String color, String type) {
-        super(model, year, color, passengers);
+    public Motorcycle(String model, int year, int passengers, String color, String type , boolean status) {
+        super(model, year, color, passengers,status);
         this.type = type;
     }
 

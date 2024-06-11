@@ -5,8 +5,8 @@ public class ICECar extends Vehicle {
     private double engineSize;
     private String range;
 
-    public ICECar(String model, int year, String color, int passengers, double engineSize, String fuelType) {
-        super(model, year, color, passengers);
+    public ICECar(String model, int year, String color, int passengers, double engineSize, String fuelType, boolean status) {
+        super(model, year, color, passengers,status);
         this.engineSize = engineSize;
         this.range = range;
     }
