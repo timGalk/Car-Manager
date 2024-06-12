@@ -4,8 +4,8 @@ public class Camper extends Vehicle {
 
     private int sleepingCapacity;
 
-    public Camper(String model, int year, String color, int passengers, int sleepingCapacity,boolean status) {
-        super(model, year, color,passengers,status);
+    public Camper(String model, int year, String color, int passengers, int sleepingCapacity) {
+        super(model, year, color,passengers);
         this.sleepingCapacity = sleepingCapacity;
     }
 
