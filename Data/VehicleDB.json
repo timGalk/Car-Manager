@@ -1,0 +1,80 @@
+ [
+    {
+      "type": "BEVCar",
+      "model": "Tesla Model 3",
+      "year": 2023,
+      "color": "White",
+      "passengers": 5,
+      "status": true,
+      "batteryCapacity": 90.0,
+      "range": 350.0
+    },
+    {
+      "type": "HybridCar",
+      "model": "Honda Accord Hybrid",
+      "year": 2022,
+      "color": "Silver",
+      "passengers": 5,
+      "status": true,
+      "engineSize": 2.0,
+      "fuelType": "Petrol",
+      "electricRange": 30.0
+    },
+    {
+      "type": "ICECar",
+      "model": "Chevrolet Camaro",
+      "year": 2021,
+      "color": "Yellow",
+      "passengers": 4,
+      "status": true,
+      "engineSize": 6.2,
+      "fuelType": "Petrol"
+    },
+    {
+      "type": "Motorcycle",
+      "model": "Kawasaki Ninja",
+      "year": 2020,
+      "color": "Green",
+      "passengers": 2,
+      "status": true
+    },
+    {
+      "type": "BEVCar",
+      "model": "Nissan Leaf",
+      "year": 2024,
+      "color": "Blue",
+      "passengers": 5,
+      "status": true,
+      "batteryCapacity": 60.0,
+      "range": 250.0
+    },
+    {
+      "type": "HybridCar",
+      "model": "Lexus RX 450h",
+      "year": 2023,
+      "color": "Black",
+      "passengers": 5,
+      "status": true,
+      "engineSize": 3.5,
+      "fuelType": "Petrol",
+      "electricRange": 28.0
+    },
+    {
+      "type": "ICECar",
+      "model": "BMW 5 Series",
+      "year": 2022,
+      "color": "Gray",
+      "passengers": 5,
+      "status": true,
+      "engineSize": 3.0,
+      "fuelType": "Petrol"
+    },
+    {
+      "type": "Motorcycle",
+      "model": "Harley Davidson Iron 883",
+      "year": 2023,
+      "color": "Black",
+      "passengers": 2,
+      "status": true
+    }
+  ]
