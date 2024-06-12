@@ -6,8 +6,8 @@ public class HybridCar extends Vehicle {
     private String fuelType;
     private double electricRange;
 
-    public HybridCar(String model, int year, String color, int passengers, double engineSize, String fuelType, double electricRange, boolean status) {
-        super(model, year, color,passengers,status);
+    public HybridCar(String model, int year, String color, int passengers, double engineSize, String fuelType, double electricRange) {
+        super(model, year, color,passengers);
         this.engineSize = engineSize;
         this.fuelType = fuelType;
         this.electricRange = electricRange;
