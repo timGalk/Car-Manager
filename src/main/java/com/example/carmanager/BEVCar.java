@@ -1,11 +1,10 @@
 package com.example.carmanager;
 
 public class BEVCar extends Vehicle {
-
     private double batteryCapacity;
     private double range;
 
-    public BEVCar(String model, int year, String color, int passengers, int price, boolean status) {
+    public BEVCar(String model, int year, String color, int passengers, int price, boolean status , double batteryCapacity, double range) {
         super(model, year, color, passengers,status,price);
         this.batteryCapacity = batteryCapacity;
         this.range = range;
