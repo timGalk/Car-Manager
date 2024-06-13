@@ -1,18 +1,18 @@
 package com.example.carmanager;
 
 public class Motorcycle extends Vehicle {
-    private String type;
+    private String motorcycleType;
 
-    public Motorcycle(String model, int year, String color, int passengers, boolean status, int price, String type) {
+    public Motorcycle(String model, int year, String color, int passengers, boolean status, int price, String motorcycleType) {
         super(model, year, color, passengers, status, price);
-        this.type = type;
+        this.motorcycleType = motorcycleType;
     }
 
-    public String getType() {
-        return type;
+    public String getMotorcycleType() {
+        return motorcycleType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setMotorcycleType(String motorcycleType) {
+        this.motorcycleType = motorcycleType;
     }
 }

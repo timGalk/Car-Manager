@@ -21,6 +21,8 @@ public class VehicleDeserializer implements JsonDeserializer<Vehicle> {
                 return context.deserialize(jsonObject,PickupTruck.class);
             case "HybridCar":
                 return context.deserialize(jsonObject,HybridCar.class);
+                case "Car":
+                return context.deserialize(jsonObject, Car.class);
             default:
                 throw new JsonParseException("Unknown vehicle type: " + vehicleType);
         }
