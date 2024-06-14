@@ -1,21 +1,29 @@
 package com.example.carmanager;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Customer {
     private String name;
     private String surname;
     private String ID;
+    private String email;
     private String phone;
-    private String mail;
-    private List<Vehicle> bookedVehicles;
 
-    public Customer(String name, String surname, String ID, String phone, String mail) {
+    // No-argument constructor
+    public Customer() {}
+
+    @JsonCreator
+    public Customer(@JsonProperty("name") String name,
+                    @JsonProperty("surname") String surname,
+                    @JsonProperty("ID") String ID,
+                    @JsonProperty("email") String email,
+                    @JsonProperty("phone") String phone) {
         this.name = name;
         this.surname = surname;
         this.ID = ID;
+        this.email = email;
         this.phone = phone;
-        this.mail = mail;
     }
 
     public String getName() {
@@ -42,19 +50,19 @@ public class Customer {
         this.ID = ID;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
     }
 }

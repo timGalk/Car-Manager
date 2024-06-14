@@ -29,7 +29,7 @@
             <TextField fx:id="textField_dateTo" layoutX="10.0" layoutY="28.0" promptText="Date to:" />
          </children>
       </VBox>
-      <Button fx:id="button_submit" layoutX="14.0" layoutY="315.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Submit" />
+      <Button fx:id="button_submit" layoutX="14.0" layoutY="315.0" mnemonicParsing="false" onAction="#btb_Submit" prefHeight="26.0" prefWidth="183.0" text="Submit" />
       <Label fx:id="label_invalidSubmission" layoutX="14.0" layoutY="350.0" prefHeight="54.0" prefWidth="183.0" />
    </children>
 </AnchorPane>

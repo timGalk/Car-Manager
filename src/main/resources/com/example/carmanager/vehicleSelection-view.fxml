@@ -39,10 +39,10 @@
                               <Label id="label_passengers" fx:id="label_passengers" prefHeight="26.0" prefWidth="239.0" />
                            </children>
                         </VBox>
-                        <VBox id="vbox_addictionalInformation" fx:id="vbox_additionalInformation" layoutX="-1.0" layoutY="222.0" prefHeight="183.0" prefWidth="278.0">
+                        <VBox id="vbox_additionalInformation" fx:id="vbox_additionalInformation" layoutX="-1.0" layoutY="222.0" prefHeight="183.0" prefWidth="278.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Additional information:" />
-                              <Label fx:id="label_addictionalInformation" prefHeight="164.0" prefWidth="276.0" />
+                              <Label fx:id="label_additionalInformation" prefHeight="164.0" prefWidth="276.0" />
                            </children>
                         </VBox>
                      </children>

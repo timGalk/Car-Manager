@@ -1,10 +1,20 @@
 package com.example.carmanager;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Camper extends Vehicle {
 
     private int sleepingCapacity;
 
-    public Camper(String model, int year, String color, int passengers, boolean status, int price, int sleepingCapacity) {
+    @JsonCreator
+    public Camper(@JsonProperty("model") String model,
+                  @JsonProperty("year") int year,
+                  @JsonProperty("color") String color,
+                  @JsonProperty("passengers") int passengers,
+                  @JsonProperty("status") boolean status,
+                  @JsonProperty("price") int price,
+                  @JsonProperty("sleepingCapacity") int sleepingCapacity) {
         super(model, year, color, passengers, status, price);
         this.sleepingCapacity = sleepingCapacity;
     }

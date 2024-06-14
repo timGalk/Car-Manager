@@ -1,23 +1,38 @@
 package com.example.carmanager;
 
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 public class DataManager {
 
     private final String VehiclesDB = "Data/VehicleDB.json";
-    private final String CustomerDB = "car-manager/Data/CustomerDB.json";
+    private final String CustomerDB = "Data/CustomerDB.json";
+    private final String ReservationDB = "Data/ReservationDB.json";
+    private ObjectMapper objectMapper;
+
+    public DataManager() {
+        // Configure object mapper for vehicles with polymorphic type handling
+        BasicPolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder()
+                .allowIfBaseType(Vehicle.class)
+                .build();
+        this.objectMapper = new ObjectMapper();
+        this.objectMapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL);
+
+    }
 
     //Vehicle Parser
     public List<Vehicle> sortallVehicles() {
@@ -32,8 +47,8 @@ public class DataManager {
             e.printStackTrace();
             return null;
         }
-
     }
+
     // Vehicles sorting by type
     //BEVCars
     public List<BEVCar> sortBevCars(List<Vehicle>vehicles){
@@ -43,6 +58,7 @@ public class DataManager {
                 .collect(Collectors.toList());
         return bevCars;
     }
+
     //Camper
     public List<Camper> sortCampers(List<Vehicle>vehicles){
         List<Camper> campers = vehicles.stream()
@@ -51,6 +67,7 @@ public class DataManager {
                 .collect(Collectors.toList());
         return campers;
     }
+
     // Cars
     public List<Camper> sortCars(List<Vehicle>vehicles){
         List<Camper> campers = vehicles.stream()
@@ -109,7 +126,9 @@ public class DataManager {
             e.printStackTrace();
             return null;
         }
+
     }
+
 
     // Method to add info about Customer into json file
     public void addCustInfo(Customer newCustomer) {
@@ -133,7 +152,29 @@ public class DataManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    // Method to add info about reservation into json file
+    public void addReservationInfo(Reservation newReservation) {
+        try {
+            Gson gson = new Gson();
+            // Read existing reservation from the JSON file
+            FileReader reader = new FileReader(ReservationDB);
+            Type reservationListType = new TypeToken<List<Reservation>>() {
+            }.getType();
+            List<Reservation> reservations = gson.fromJson(reader, reservationListType);
+            reader.close();
+
+            // Add the new customer to the list
+            reservations.add(newReservation);
+
+            // Write the updated list back to the JSON file
+            FileWriter writer = new FileWriter(ReservationDB);
+            gson.toJson(reservations, writer);
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
-
