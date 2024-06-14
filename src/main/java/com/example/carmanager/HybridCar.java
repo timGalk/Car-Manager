@@ -1,12 +1,24 @@
 package com.example.carmanager;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class HybridCar extends Vehicle {
 
     private double engineSize;
     private String fuelType;
     private double electricRange;
 
-    public HybridCar(String model, int year, String color, int passengers, boolean status, int price, double engineSize, String fuelType, double electricRange) {
+    @JsonCreator
+    public HybridCar(@JsonProperty("model") String model,
+                     @JsonProperty("year") int year,
+                     @JsonProperty("color") String color,
+                     @JsonProperty("passengers") int passengers,
+                     @JsonProperty("status") boolean status,
+                     @JsonProperty("price") int price,
+                     @JsonProperty("engineSize") double engineSize,
+                     @JsonProperty("fuelType") String fuelType,
+                     @JsonProperty("electricRange") double electricRange) {
         super(model, year, color, passengers, status, price);
         this.engineSize = engineSize;
         this.fuelType = fuelType;

@@ -29,6 +29,7 @@ public class VehicleSelectionController implements Initializable {
     private Parent root;
     private Vehicle selectedVehicle;
     private String[] vehicleTypes = {"All", "BEVCar", "Camper", "Car", "HybridCar","ICECar", "Motorcycle", "PickupTruck"};
+    private String[] availabilityOptions = {"All","Available","Not Available"};
     private FilteredList filteredList;
     private ObservableList<Vehicle> vehicleList;
     @FXML
@@ -57,8 +58,9 @@ public class VehicleSelectionController implements Initializable {
 
     @FXML
     private Label label_year;
+
     @FXML
-    private Label label_additionalInformation;
+    public Label label_additionalInformation;
 
     @FXML
     private ListView<Vehicle> listView_vehicleList;
@@ -66,35 +68,70 @@ public class VehicleSelectionController implements Initializable {
     @FXML
     private VBox vbox_additionalInformation;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //exemplary list - this should be used with the actual array list of all vehicle objects
-        List<Vehicle> exampleList = new ArrayList<>();
-        exampleList.add(new Vehicle("BMW",2009,"white", 2, true, 120));
+        DataManager dataManager = new DataManager();
+        // Get the list of all vehicles
+        List<Vehicle> exampleList = dataManager.sortallVehicles();
+
+        // Initialize the observable list with the vehicle list
         vehicleList = FXCollections.observableArrayList(exampleList);
+
+        // Add vehicle types to the choice box
         choiceBox_vehicleType.getItems().addAll(vehicleTypes);
         choiceBox_vehicleType.setOnAction(event -> {
             try {
-                filterList(event);
+                filterList(event); // Filter the list based on selected type
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         });
+
+        // Add availability types to the choice box
+        /*/choiceBox_availability.getItems().addAll(availabilityOptions);
+        choiceBox_availability.setOnAction(event -> {
+            try {
+                filterListByAvailability(event); // Filter the list based on selected availability
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });/*/
+
+        // Initialize filtered list with all vehicles
         filteredList = new FilteredList<>(vehicleList, p -> true);
         listView_vehicleList.setItems(filteredList);
+
+        // Add listener for selecting a vehicle from the list
         listView_vehicleList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Vehicle>() {
             @Override
             public void changed(ObservableValue<? extends Vehicle> observableValue, Vehicle vehicle, Vehicle t1) {
                 selectedVehicle = listView_vehicleList.getSelectionModel().getSelectedItem();
+                //displayDetails();
             }
         });
     }
+    /*/public void filterListByAvailability(ActionEvent event) {
+        String selectedAvailability = choiceBox_availability.getValue();
+
+        filteredList.setPredicate( -> {
+            if ("All".equals(selectedAvailability)) {
+                return true; // Show all vehicles if "All" is selected
+            } else if ("Available".equals(selectedAvailability)) {
+                return selectedVehicle.isStatus(); // Show only available vehicles
+            } else {
+                return!Vehicle.isStatus(); // Show only not available vehicles
+            }
+        });
+    }/*/
+
+    // Method to filter the vehicle list based on selected type
     public void filterList(ActionEvent event) throws ClassNotFoundException {
         String selectedType = choiceBox_vehicleType.getValue();
 
         filteredList.setPredicate(vehicle -> {
             if ("All".equals(selectedType)) {
-                return true;
+                return true; // Show all vehicles if "All" is selected
             }
             try {
                 Class<?> clas = Class.forName("com.example.carmanager." + selectedType);
@@ -105,16 +142,45 @@ public class VehicleSelectionController implements Initializable {
             }
         });
     }
+
+    // Method to display details of the selected vehicle
     @FXML
     public void displayDetails(){
+
         // this method should utilize the declared labels and properties of the selected object
         // the selected vehicle is selectedVehicle
         // one label exists for individual properties of all extensions of Vehicle - label_additionalInformation
         label_model.setText(selectedVehicle.getModel());
         label_type.setText(selectedVehicle.getClass().getSimpleName());
         label_color.setText(selectedVehicle.getColor());
+        label_year.setText(String.valueOf(selectedVehicle.getYear()));
+        label_passengers.setText(String.valueOf(selectedVehicle.getPassengers()));
+
+        // Display additional information based on the type of vehicle
+        String additionalInfo = " ";
+        if (selectedVehicle instanceof BEVCar) {
+            BEVCar bevCar = (BEVCar) selectedVehicle;
+            additionalInfo = "Battery Capacity: " + bevCar.getBatteryCapacity() + " kWh\nRange: " + bevCar.getRange() + " miles";
+        } else if (selectedVehicle instanceof HybridCar) {
+            HybridCar hybridCar = (HybridCar) selectedVehicle;
+            additionalInfo = "Engine Size: " + hybridCar.getEngineSize() + " L\nFuel Type: " + hybridCar.getFuelType() + "\nElectric Range: " + hybridCar.getElectricRange() + " miles";
+        } else if (selectedVehicle instanceof ICECar) {
+            ICECar iceCar = (ICECar) selectedVehicle;
+            additionalInfo = "Engine Size: " + iceCar.getEngineSize() + " L\nEngine Size: " + iceCar.getEngineSize() + "\nRange: " + iceCar.getRange();
+        } else if (selectedVehicle instanceof Camper) {
+            Camper camper = (Camper) selectedVehicle;
+            additionalInfo = "Sleeping Capacity: " + camper.getSleepingCapacity();
+        } else if (selectedVehicle instanceof Motorcycle) {
+            Motorcycle motorcycle = (Motorcycle) selectedVehicle;
+            additionalInfo = "Motorcycle Type: " + motorcycle.getMotorcycleType();
+        } else if (selectedVehicle instanceof PickupTruck) {
+            PickupTruck pickupTruck = (PickupTruck) selectedVehicle;
+            additionalInfo = "Payload Capacity: " + pickupTruck.getPayloadCapacity() + " lbs";
+        }
+        label_additionalInformation.setText(additionalInfo);
     }
 
+    // Method to handle the rent button click event
     public void rent(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("customerInput-view.fxml"));
         root = loader.load();
