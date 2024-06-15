@@ -1,5 +1,6 @@
 package com.example.carmanager;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -71,9 +72,15 @@ public class VehicleSelectionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObjectMapper mapper = new ObjectMapper();
         DataManager dataManager = new DataManager();
         // Get the list of all vehicles
-        List<Vehicle> exampleList = dataManager.sortallVehicles();
+        List<Vehicle> exampleList = null;
+        try {
+            exampleList = dataManager.sortallVehicles(mapper);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         // Initialize the observable list with the vehicle list
         vehicleList = FXCollections.observableArrayList(exampleList);
@@ -89,14 +96,10 @@ public class VehicleSelectionController implements Initializable {
         });
 
         // Add availability types to the choice box
-        /*/choiceBox_availability.getItems().addAll(availabilityOptions);
+        choiceBox_availability.getItems().addAll(availabilityOptions);
         choiceBox_availability.setOnAction(event -> {
-            try {
-                filterListByAvailability(event); // Filter the list based on selected availability
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        });/*/
+            filterListByAvailability(event,filteredList,choiceBox_availability); // Filter the list based on selected availability
+        });
 
         // Initialize filtered list with all vehicles
         filteredList = new FilteredList<>(vehicleList, p -> true);
@@ -111,19 +114,20 @@ public class VehicleSelectionController implements Initializable {
             }
         });
     }
-    /*/public void filterListByAvailability(ActionEvent event) {
+
+    public void filterListByAvailability(ActionEvent event,FilteredList<Vehicle> filteredList,ChoiceBox<String> choiceBox_availability) {
         String selectedAvailability = choiceBox_availability.getValue();
 
-        filteredList.setPredicate( -> {
+        filteredList.setPredicate(vehicle -> {
             if ("All".equals(selectedAvailability)) {
                 return true; // Show all vehicles if "All" is selected
             } else if ("Available".equals(selectedAvailability)) {
-                return selectedVehicle.isStatus(); // Show only available vehicles
+                return vehicle.isStatus(); // Show only available vehicles
             } else {
-                return!Vehicle.isStatus(); // Show only not available vehicles
+                return !vehicle.isStatus(); // Show only not available vehicles
             }
         });
-    }/*/
+    }
 
     // Method to filter the vehicle list based on selected type
     public void filterList(ActionEvent event) throws ClassNotFoundException {

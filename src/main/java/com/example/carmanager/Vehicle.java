@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 // This annotation specifies the possible subtypes of the class and their corresponding type names.
 // It is used to help Jackson know which class to instantiate when deserializing JSON objects.
 @JsonSubTypes({
+        @JsonSubTypes.Type(value = BEVCar.class, name = "BEVCar"),
         @JsonSubTypes.Type(value = Camper.class, name = "Camper"),
         @JsonSubTypes.Type(value = PickupTruck.class, name = "PickupTruck"),
         @JsonSubTypes.Type(value = Motorcycle.class, name = "Motorcycle"),
@@ -31,7 +32,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 public class Vehicle {
     //
-
     private String model;
     private int year;
     private String color;

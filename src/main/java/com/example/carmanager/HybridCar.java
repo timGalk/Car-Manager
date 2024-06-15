@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class HybridCar extends Vehicle {
-
     private double engineSize;
     private String fuelType;
     private double electricRange;
