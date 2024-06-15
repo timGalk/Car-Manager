@@ -115,10 +115,11 @@ public class DataManager {
 
 
     // Consumers Parser
+    //error
     public List<Customer> parseCustomers() {
         try (FileReader fr = new FileReader(CustomerDB)) {
             Gson gson = new Gson();
-            Type listType = new TypeToken<List<Vehicle>>() {
+            Type listType = new TypeToken<List<Customer>>() {
             }.getType();
             List<Customer> customers = gson.fromJson(fr, listType);
             return customers;

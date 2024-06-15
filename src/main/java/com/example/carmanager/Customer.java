@@ -8,7 +8,7 @@ public class Customer {
     private String surname;
     private String ID;
     private String email;
-    private String phone;
+    private String phoneNumber;
 
     // No-argument constructor
     public Customer() {}
@@ -18,12 +18,12 @@ public class Customer {
                     @JsonProperty("surname") String surname,
                     @JsonProperty("ID") String ID,
                     @JsonProperty("email") String email,
-                    @JsonProperty("phone") String phone) {
+                    @JsonProperty("phoneNumber") String phone) {
         this.name = name;
         this.surname = surname;
         this.ID = ID;
         this.email = email;
-        this.phone = phone;
+        this.phoneNumber = phone;
     }
 
     public String getName() {
@@ -59,10 +59,10 @@ public class Customer {
     }
 
     public String getPhone() {
-        return phone;
+        return phoneNumber;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phoneNumber = phone;
     }
 }
