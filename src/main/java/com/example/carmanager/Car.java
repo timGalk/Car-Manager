@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Car extends Vehicle {
 
     private String fuelType;
-
     @JsonCreator
     public Car(@JsonProperty("model") String model,
                @JsonProperty("year") int year,

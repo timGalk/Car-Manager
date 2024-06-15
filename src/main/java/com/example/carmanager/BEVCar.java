@@ -1,11 +1,24 @@
 package com.example.carmanager;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class BEVCar extends Vehicle {
     private double batteryCapacity;
     private double range;
 
-    public BEVCar(String model, int year, String color, int passengers, int price, boolean status , double batteryCapacity, double range) {
-        super(model, year, color, passengers,status,price);
+    @JsonCreator
+    public BEVCar(
+            @JsonProperty("model") String model,
+            @JsonProperty("year") int year,
+            @JsonProperty("color") String color,
+            @JsonProperty("passengers") int passengers,
+            @JsonProperty("price") int price,
+            @JsonProperty("status") boolean status,
+            @JsonProperty("batteryCapacity") double batteryCapacity,
+            @JsonProperty("range") double range
+    ) {
+        super(model, year, color, passengers, status, price);
         this.batteryCapacity = batteryCapacity;
         this.range = range;
     }

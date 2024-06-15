@@ -1,5 +1,7 @@
 package com.example.carmanager;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -81,7 +83,7 @@ public class CustomerInputController {
         stage.show();
     }
 
-    public void btb_Submit(ActionEvent actionEvent) {
+    public void btb_Submit(ActionEvent actionEvent) throws IOException {
         try {
             // Parse the dates from the text fields using the specified date formatter
             LocalDate dateFrom = LocalDate.parse(textField_dateFrom.getText(), dateFormatter);
@@ -105,6 +107,7 @@ public class CustomerInputController {
                 return;
             }
 
+
             // Generate a random ID for the customer
             Random random = new Random();
             int id = random.nextInt(999999);
@@ -118,8 +121,12 @@ public class CustomerInputController {
             // Create a new Reservation object using the vehicle, customer, and dates
             Reservation reservation = new Reservation(vehicle, customer, dateFrom.toString(), dateTo.toString());
 
-            // Create an instance of DataManager to handle data storage and add to customer database
+            // Update Vehicle's database and mark selected vehicles as booked
             DataManager dataManager = new DataManager();
+            ObjectMapper mapper = new ObjectMapper();
+            List<Vehicle> vehicles = dataManager.sortallVehicles(mapper);
+            dataManager.bookVehicle(mapper, vehicles, selectedVehicle);
+            // Create an instance of DataManager to handle data storage and add to customer database
             dataManager.addCustInfo(customer);
 
             // Add the new reservation and add to database

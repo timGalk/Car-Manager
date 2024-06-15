@@ -1,10 +1,10 @@
 package com.example.carmanager;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 
@@ -35,23 +35,22 @@ public class DataManager {
     }
 
     //Vehicle Parser
-    public List<Vehicle> sortallVehicles() {
-        try (FileReader fr = new FileReader(VehiclesDB)) {
-            Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(Vehicle.class, new VehicleDeserializer())
-                    .create();
-            Type listType = new TypeToken<List<Vehicle>>() {}.getType();
-            List<Vehicle> vehicles = gson.fromJson(fr, listType);
-            return vehicles;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+    public List<Vehicle> sortallVehicles(ObjectMapper mapper) throws IOException {
+        JsonNode node = mapper.readTree(new File(VehiclesDB));
+        List<Vehicle> vehicles = new ArrayList<>();
+        if (node.isArray()) {
+            for (JsonNode jsonNode : node) {
+                Vehicle vehicle = mapper.treeToValue(jsonNode, Vehicle.class);
+                vehicles.add(vehicle);
+            }
         }
+        return vehicles;
     }
+
 
     // Vehicles sorting by type
     //BEVCars
-    public List<BEVCar> sortBevCars(List<Vehicle>vehicles){
+    public List<BEVCar> sortBevCars(List<Vehicle> vehicles) {
         List<BEVCar> bevCars = vehicles.stream()
                 .filter(BEVCar.class::isInstance)
                 .map(BEVCar.class::cast)
@@ -60,7 +59,7 @@ public class DataManager {
     }
 
     //Camper
-    public List<Camper> sortCampers(List<Vehicle>vehicles){
+    public List<Camper> sortCampers(List<Vehicle> vehicles) {
         List<Camper> campers = vehicles.stream()
                 .filter(Camper.class::isInstance)
                 .map(Camper.class::cast)
@@ -69,7 +68,7 @@ public class DataManager {
     }
 
     // Cars
-    public List<Camper> sortCars(List<Vehicle>vehicles){
+    public List<Camper> sortCars(List<Vehicle> vehicles) {
         List<Camper> campers = vehicles.stream()
                 .filter(Camper.class::isInstance)
                 .map(Camper.class::cast)
@@ -79,23 +78,25 @@ public class DataManager {
 
 
     //Motorcycles
-    public List<Motorcycle> sortMotorcycles(List<Vehicle>vehicles){
+    public List<Motorcycle> sortMotorcycles(List<Vehicle> vehicles) {
         List<Motorcycle> motorcycles = vehicles.stream()
                 .filter(Motorcycle.class::isInstance)
                 .map(Motorcycle.class::cast)
                 .collect(Collectors.toList());
         return motorcycles;
     }
+
     //Hybrid cars
-    public List<HybridCar> sortHybridCars(List<Vehicle>vehicles) {
+    public List<HybridCar> sortHybridCars(List<Vehicle> vehicles) {
         List<HybridCar> hybridCars = vehicles.stream()
                 .filter(HybridCar.class::isInstance)
                 .map(HybridCar.class::cast)
                 .collect(Collectors.toList());
         return hybridCars;
     }
+
     //ICECars
-    public List<ICECar> sortIceCars(List<Vehicle>vehicles) {
+    public List<ICECar> sortIceCars(List<Vehicle> vehicles) {
         List<ICECar> iceCars = vehicles.stream()
                 .filter(ICECar.class::isInstance)
                 .map(ICECar.class::cast)
@@ -105,14 +106,13 @@ public class DataManager {
 
 
     //PickupTracks
-    public List<PickupTruck> sortPickupTrucks(List<Vehicle>vehicles) {
+    public List<PickupTruck> sortPickupTrucks(List<Vehicle> vehicles) {
         List<PickupTruck> pickupTrucks = vehicles.stream()
                 .filter(PickupTruck.class::isInstance)
                 .map(PickupTruck.class::cast)
                 .collect(Collectors.toList());
         return pickupTrucks;
     }
-
 
     // Consumers Parser
     //error
@@ -129,7 +129,6 @@ public class DataManager {
         }
 
     }
-
 
     // Method to add info about Customer into json file
     public void addCustInfo(Customer newCustomer) {
@@ -165,7 +164,6 @@ public class DataManager {
             }.getType();
             List<Reservation> reservations = gson.fromJson(reader, reservationListType);
             reader.close();
-
             // Add the new customer to the list
             reservations.add(newReservation);
 
@@ -178,4 +176,21 @@ public class DataManager {
             e.printStackTrace();
         }
     }
-}
+
+    //Method to book particular Vehicle
+    public void bookVehicle(ObjectMapper mapper,List<Vehicle> vehicles,Vehicle bookedVehicle) throws IOException {
+        for (Vehicle vehicle : vehicles) {
+            if (bookedVehicle.equals(vehicle)) {
+                vehicle.setStatus(false);
+                break;
+            }
+        }
+        ArrayNode arrayNode = mapper.createArrayNode();
+        for (Vehicle vehicle : vehicles) {
+            JsonNode vehicleNode = mapper.valueToTree(vehicle);
+            arrayNode.add(vehicleNode);
+        }
+        mapper.writeValue(new File(VehiclesDB), arrayNode);
+    }
+
+    }
