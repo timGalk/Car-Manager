@@ -39,3 +39,4 @@ build/
 /.idea/
 /.mvn/
 /src/main/java/com/example/carmanager/DataManagerTest.java
+/src/main/java/com/example/carmanager/DataTest.java
