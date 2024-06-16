@@ -186,16 +186,26 @@ public class VehicleSelectionController implements Initializable {
 
     // Method to handle the rent button click event
     public void rent(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("customerInput-view.fxml"));
-        root = loader.load();
-        CustomerInputController customerInputController = loader.getController();
-        if (selectedVehicle != null){
-            customerInputController.displayVehicle(selectedVehicle);
-            customerInputController.setVehicle(selectedVehicle);
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+        if (selectedVehicle != null && !selectedVehicle.isStatus()) {
+            // Show an alert if the selected vehicle is not available
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Vehicle Not Available");
+            alert.setHeaderText(null);
+            alert.setContentText("The selected vehicle is not available for rent. Please select a different vehicle.");
+            alert.showAndWait();
+        } else if (selectedVehicle != null) {
+            // Proceed with renting the vehicle if it is available
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("customerInput-view.fxml"));
+            root = loader.load();
+            CustomerInputController customerInputController = loader.getController();
+            if (selectedVehicle != null) {
+                customerInputController.displayVehicle(selectedVehicle);
+                customerInputController.setVehicle(selectedVehicle);
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            }
         }
     }
 }
