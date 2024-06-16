@@ -2,6 +2,8 @@ package com.example.carmanager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -107,7 +109,6 @@ public class CustomerInputController {
                 return;
             }
 
-
             // Generate a random ID for the customer
             Random random = new Random();
             int id = random.nextInt(999999);
@@ -125,6 +126,7 @@ public class CustomerInputController {
             DataManager dataManager = new DataManager();
             ObjectMapper mapper = new ObjectMapper();
             List<Vehicle> vehicles = dataManager.sortallVehicles(mapper);
+
             dataManager.bookVehicle(mapper, vehicles, selectedVehicle);
             // Create an instance of DataManager to handle data storage and add to customer database
             dataManager.addCustInfo(customer);
@@ -143,6 +145,7 @@ public class CustomerInputController {
             label_invalidSubmission.setText("Invalid date format. Please use yyyy-MM-dd.");
         }
     }
+
 
     private boolean isVehicleAvailable(LocalDate dateFrom, LocalDate dateTo) {
         for (Reservation reservation : reservations) {
