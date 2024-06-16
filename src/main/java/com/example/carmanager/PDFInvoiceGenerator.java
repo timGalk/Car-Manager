@@ -92,7 +92,7 @@ public class PDFInvoiceGenerator {
             cs.close();
 
             // Generate the filename using the customer's name
-            String filename = "Invoice_" + customerName.replace(" ", "_") + ".pdf";
+            String filename = "Data/Invoice/Invoice_" + customerName.replace(" ", "_") + ".pdf";
             invc.save(filename);
             invc.close();
 

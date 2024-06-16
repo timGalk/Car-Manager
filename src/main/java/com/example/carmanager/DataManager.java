@@ -180,17 +180,21 @@ public class DataManager {
     //Method to book particular Vehicle
     public void bookVehicle(ObjectMapper mapper,List<Vehicle> vehicles,Vehicle bookedVehicle) throws IOException {
         for (Vehicle vehicle : vehicles) {
-            if (bookedVehicle.equals(vehicle)) {
+            if (bookedVehicle.getModel().equals(vehicle.getModel()) ) {
                 vehicle.setStatus(false);
+                System.out.println("Vehicle status updated to false.");
                 break;
             }
         }
+
+
         ArrayNode arrayNode = mapper.createArrayNode();
         for (Vehicle vehicle : vehicles) {
             JsonNode vehicleNode = mapper.valueToTree(vehicle);
             arrayNode.add(vehicleNode);
         }
         mapper.writeValue(new File(VehiclesDB), arrayNode);
+        System.out.println("Vehicle data saved to file.");
     }
 
     }
