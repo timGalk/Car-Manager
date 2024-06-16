@@ -2,6 +2,7 @@ package com.example.carmanager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.itextpdf.text.DocumentException;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -91,6 +92,12 @@ public class CustomerInputController {
             LocalDate dateFrom = LocalDate.parse(textField_dateFrom.getText(), dateFormatter);
             LocalDate dateTo = LocalDate.parse(textField_dateTo.getText(), dateFormatter);
 
+            // Ensure "date from" is not after "date to"
+            if (dateFrom.isAfter(dateTo)) {
+                label_invalidSubmission.setText("\"Date From\" cannot be after \"Date To\".");
+                return;
+            }
+
             // Check if the selected vehicle is available for the specified dates
             if (!isVehicleAvailable(dateFrom, dateTo)) {
                 label_invalidSubmission.setText("Vehicle is not available for the selected dates.");
@@ -136,13 +143,18 @@ public class CustomerInputController {
             dataManager.addReservationInfo(reservation);
 
             // Generate a PDF invoice for the reservation
-            PDFInvoiceGenerator invoice = new PDFInvoiceGenerator(reservations);
-            invoice.WriteInvoice();
+            String filename = "Data/Invoice/" + customer.getName() + " " + customer.getSurname() + " Invoice.pdf";
+            PDFInvoiceGenerator invoice = new PDFInvoiceGenerator(filename, reservation);
+            invoice.createDocument();
+            invoice.addContent();
+            invoice.closeDocument();
 
             // Display a success message that the invoice is created
             label_invalidSubmission.setText("Invoice generated successfully!");
         } catch (DateTimeParseException e) {
             label_invalidSubmission.setText("Invalid date format. Please use yyyy-MM-dd.");
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
         }
     }
 
