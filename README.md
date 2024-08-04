@@ -1,6 +1,7 @@
 # Car rental service
 
-Write a software for a rental company so that users can rent different types of vehicles such as ICE/hybrid/BEV cars, motorcycles, pickups, and campers. It should allow the user to pick an available vehicle, enter their information and print out a invoice.
+The programm was developed in terms of the following task: 
+*Write a software for a rental company so that users can rent different types of vehicles such as ICE/hybrid/BEV cars, motorcycles, pickups, and campers. It should allow the user to pick an available vehicle, enter their information and print out a invoice.*
 
 
 ## Languages used:
