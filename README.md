@@ -11,7 +11,7 @@ The program was developed as a student project for the following task:
 
 - Java ☕
 
-## Libraries 
+## Libraries and tools
 
 * JavaFx 
 * Maven 
