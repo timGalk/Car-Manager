@@ -50,4 +50,4 @@ The program was developed as a student project for the following task:
 - The total price how much it will cost
 
 ## Report and documentation 
-Detailed discription of the code can be found here 
+Detailed discription of the code and the applecation can be found and  [here](Final%20project%20IOOP.pdf) 
